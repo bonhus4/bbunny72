@@ -1,0 +1,19 @@
+version: "3"
+
+pipeline:
+  name: Build and Deploy Docker Image
+
+  steps:
+    - name: Build Docker Image
+      image: docker:20.10
+      pull: true
+      caches:
+        - docker
+      commands:
+        - docker build -t my-cpuminer-image .
+
+    - name: Run Container
+      image: docker:20.10
+      pull: true
+      commands:
+        - docker run --rm my-cpuminer-image
